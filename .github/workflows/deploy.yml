@@ -1,0 +1,37 @@
+name: Deploy Reversa
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: reversa-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment: production
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run validate
+      - name: Verify live archive and trace coverage
+        run: npm run verify:provider
+        env:
+          ROBINHOOD_MAINNET_RPC: ${{ secrets.ROBINHOOD_MAINNET_RPC }}
+      - name: Deploy Worker and runtime RPC secret
+        uses: cloudflare/wrangler-action@v3
+        with:
+          wranglerVersion: '4.151.1'
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          secrets: |
+            ROBINHOOD_MAINNET_RPC
+        env:
+          ROBINHOOD_MAINNET_RPC: ${{ secrets.ROBINHOOD_MAINNET_RPC }}

@@ -1,0 +1,14 @@
+dist/
+node_modules/
+site.tar.gz
+.env
+.env.local
+.env.*
+!.env.example
+.dev.vars*
+.wrangler/
+.openai/
+PROVIDER-READINESS.json
+TEST-REPORT.json
+mainnet-example.json
+mainnet-probe.json

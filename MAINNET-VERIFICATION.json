@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-10-16T12:58:42.465Z",
+  "connection": {
+    "network": "mainnet",
+    "chainId": 4663,
+    "latestBlock": 90096022,
+    "blockTimestamp": "2026-10-16T12:58:27.000Z",
+    "provider": "Public RPC",
+    "checkedAt": "2026-10-16T12:58:27.610Z"
+  },
+  "transaction": {
+    "hash": "0xe44603488f3b298d34333aca94547a37218c2e2c12596802f96323c1e7805d43",
+    "block": "90096027",
+    "status": "0x1",
+    "gasUsed": "215272",
+    "transfers": 0,
+    "calls": 0,
+    "traceError": "Call tracing: the method debug_traceTransaction does not exist/is not available; parity tracing: the method trace_transaction does not exist/is not available"
+  },
+  "contract": {
+    "address": "0x0000000000000000000000000000000000000064",
+    "codeBytes": 1
+  },
+  "checks": [
+    "Mainnet chain ID",
+    "Real user transaction and receipt",
+    "Block evidence",
+    "Native value and exact fee calculation",
+    "Live address bytecode",
+    "Wrong-chain rejection",
+    "Verified source and proxy resolution tested separately in CONTRACT-VERIFICATION.json",
+    "Standard calldata decoder",
+    "Solidity revert decoder"
+  ],
+  "limitations": [
+    "Public RPC rejects debug_traceTransaction; historical call replay remains unavailable.",
+    "Source availability depends on Sourcify coverage; custom proxy patterns may require manual review."
+  ]
+}
