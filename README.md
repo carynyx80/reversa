@@ -4,7 +4,7 @@ Read-only Robinhood Chain transaction and contract analysis, implemented as a Cl
 
 Repository: https://github.com/carynyx80/reversa. Read [deployment instructions](DEPLOYMENT.md) and [release status](RELEASE-STATUS.md) before publishing.
 
-The initial deployment defaults to **receipt-only mode** using the official public RPC. Select `receipt` in the manual deployment workflow and configure the two Cloudflare secrets. Internal replay is explicitly disabled until an archive/tracing provider is configured and full-mode checks pass.
+The live deployment now runs in **verified mainnet replay mode**. Historical code/storage/calls and tracing passed the release gate. See RELEASE-STATUS.md and docs/verification for evidence. Receipt mode remains available as a fallback.
 
 ## Run
 
@@ -30,6 +30,6 @@ On mainnet, the live token at `0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec` resol
 
 ## Remaining MVP work
 
-Historical live replay and historical ABI resolution are blocked by missing archive/tracing provider access. Version 0.4 adds request/response bounds, rate and concurrency limits, analysis caching/coalescing, optional shared KV/platform rate-limiter bindings, secret redaction, security headers, metrics protection and deterministic scenario/load tests. GitHub CI checks the build; manual deployment requires a passing live provider gate. Distributed production load tests, hosted verification, background jobs and saved sessions remain. AI, security auditing, decompilation and opcode execution snapshots are not implemented. No PostgreSQL or Redis service is provisioned. These are not represented as completed features.
+Historical mainnet replay and ABI resolution are now enabled through the dedicated provider and passed the live scenario gate. Version 0.4 adds request/response bounds, rate and concurrency limits, analysis caching/coalescing, optional shared KV/platform rate-limiter bindings, secret redaction, security headers, metrics protection and deterministic scenario/load tests. GitHub CI checks the build; manual deployment requires a passing live provider gate. Distributed production load tests, background jobs and saved sessions remain; hosted replay and browser controls were verified. AI, security auditing, decompilation and opcode execution snapshots are not implemented. No PostgreSQL or Redis service is provisioned. These are not represented as completed features.
 
 Tests use synthetic fixtures for reproducibility; they are never displayed as live data in the application. Calls are replayed in depth-first order, capped at 5,000, not opcode or event chronology. State differences are unavailable. This is an independent project, not an official Robinhood product.

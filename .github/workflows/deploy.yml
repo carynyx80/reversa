@@ -6,7 +6,7 @@ on:
         description: Deployment capability
         type: choice
         required: true
-        default: receipt
+        default: full
         options:
           - receipt
           - full

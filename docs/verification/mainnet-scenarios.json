@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-16T14:20:34.254Z",
+  "ready": true,
+  "checks": [
+    "Mainnet chain ID 4663",
+    {
+      "category": "success",
+      "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+      "block": "0x55e93ba",
+      "method": "debug_traceTransaction"
+    },
+    {
+      "category": "nested",
+      "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+      "block": "0x55e93ba",
+      "method": "debug_traceTransaction"
+    },
+    {
+      "category": "token",
+      "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+      "block": "0x55e93ba",
+      "method": "debug_traceTransaction"
+    },
+    {
+      "category": "proxy",
+      "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+      "block": "0x55e93ba",
+      "method": "debug_traceTransaction"
+    },
+    {
+      "category": "reverted",
+      "hash": "0x463926387757869f9a3409fb6308b3769a898f5bb5c1c7f656ea51e9987799f6",
+      "block": "0x55f7fbf",
+      "method": "debug_traceTransaction"
+    }
+  ],
+  "blockers": []
+}

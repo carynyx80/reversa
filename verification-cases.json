@@ -1,0 +1,23 @@
+[
+  {
+    "category": "success",
+    "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0"
+  },
+  {
+    "category": "nested",
+    "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0"
+  },
+  {
+    "category": "token",
+    "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0"
+  },
+  {
+    "category": "proxy",
+    "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+    "contractAddress": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec"
+  },
+  {
+    "category": "reverted",
+    "hash": "0x463926387757869f9a3409fb6308b3769a898f5bb5c1c7f656ea51e9987799f6"
+  }
+]

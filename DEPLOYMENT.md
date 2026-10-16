@@ -10,7 +10,7 @@ Use Node 22 or later. Run `npm ci`, `npm test`, `npm run build`, `npm run valida
 
 ## Required account setup
 
-For the initial public-RPC release, choose **receipt** in the manual **Deploy Reversa** workflow. Only `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are required as GitHub `production` environment secrets. This mode verifies mainnet reads and disables internal call tracing. Current-state Contract Lab remains available. No private RPC secret or verification-case file is needed for receipt mode. Full mode still requires all steps below.
+Full replay is now the verified default. Both receipt and full deployment workflows install ROBINHOOD_MAINNET_RPC from the production environment secret. The checked verification-cases.json file is included. Choose receipt only when intentionally disabling internal replay.
 
 1. Obtain a Robinhood Chain mainnet endpoint with chain ID 4663, historical code/storage/eth_call access, and either `debug_traceTransaction` with `callTracer` or `trace_transaction`. Confirm historical coverage, throughput and charges with the provider before subscribing. Official provider list: https://docs.robinhood.com/chain/connecting/.
 2. Put the endpoint in local `.env` as `ROBINHOOD_MAINNET_RPC`. Never commit `.env` or put the endpoint in browser fields.
@@ -19,7 +19,7 @@ For the initial public-RPC release, choose **receipt** in the manual **Deploy Re
 5. Configure a Cloudflare account and a scoped Workers deployment API token. Add these secrets to the GitHub repository's `production` environment: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `ROBINHOOD_MAINNET_RPC`.
 6. In GitHub Actions, run **Deploy Reversa** manually. It runs tests/build validation and the live provider gate before deployment. The RPC secret is installed server-side by Wrangler. Review the emitted Worker URL, then verify `/api/health`, real transaction replay, token flow, Contract Lab, export and error handling on that URL.
 
-The default `workers_dev` URL is public when deployed. The workflow is manual and is not triggered by ordinary pushes. Cloudflare account configuration and runtime secrets are not created by committing this repository. The workflow was prepared; hosted deployment has not yet been verified.
+The default `workers_dev` URL is public when deployed. The workflow is manual and is not triggered by ordinary pushes. Cloudflare account configuration and runtime secrets are not created by committing this repository. The full-mode workflow deployed successfully and the hosted replay was verified on 16 October 2026.
 
 ## Operational controls
 

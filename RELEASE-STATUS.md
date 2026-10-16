@@ -1,24 +1,20 @@
-# Release status
+# Verified mainnet replay release
 
-Updated 16 October 2026.
+Updated 16 October 2026. Live app: https://reversa.ojerindeayomide3.workers.dev
 
-## Implemented and checked locally
+## Passed
 
-- Mainnet chain verification, live transaction/receipt lookup and current-state verified source retrieval.
-- Call replay, connected graph, rollback-aware native movement, token events, ABI decoding, source/proxy/beacon inspection and static disassembly.
-- Method/origin/type validation, streaming input bounds, upstream response bounds, credential redaction, hash-based script CSP, rate/admission limits, bounded cache/coalescing and optional KV/rate-limiter bindings.
-- Deterministic successful/reverted/nested/proxy/token scenarios and 100 concurrent fixture analyses coalesced to 5 RPC requests. This is not a distributed live-provider load test.
-- GitHub CI and a manual Cloudflare deployment workflow with a required live provider gate.
+- Live health: Robinhood mainnet, chain ID 4663, dedicated provider, full replay mode.
+- Historical contract code, storage, eth_call and callTracer access.
+- Five scenario categories across two real mainnet transactions: successful, reverted, nested calls, proxy resolution and token transfer. The successful transaction returned 10 call frames with maximum depth 4; the failed transaction returned 2 calls and decoded revert reason SPL.
+- Hosted browser controls: next/previous, automatic playback, 10-node execution graph, node inspection, ABI argument decoding and JSON export.
+- Historical token metadata and transfer amount decoding; current-state verified source/ABI and beacon/implementation resolution.
+- Deterministic regression tests, request/security bounds, cache/concurrency tests, 100-request fixture load test, build validation and GitHub CI.
 
-## Required before production release
+Evidence is under `docs/verification/`. `verification-cases.json` contains the public case hashes used by the full-mode release gate. Secrets remain in GitHub/Cloudflare, not in this repository.
 
-The user has selected a public-RPC receipt-only release for now. A receipt-mode workflow is available and does not claim historical replay. Full-mode gates below remain required before enabling that feature.
+## Limits
 
-1. Add a Robinhood mainnet archive/tracing endpoint. None has been supplied. The public RPC rejected tracing and historical state during tests.
-2. Add real verification-case hashes and pass `npm run verify:provider` for success, revert, nested, proxy and token cases.
-3. Add Cloudflare deployment credentials and the endpoint as repository environment secrets.
-4. Run deployment, confirm the hosted URL, and repeat browser checks there.
+This is a verified MVP, not an exhaustive security audit or an unlimited-load guarantee. Provider rate limits are possible; verification uses paced requests and bounded retries. State differences, opcode stack/memory snapshots, AI explanations, decompilation, saved workspaces and API billing are outside this MVP. Browser QA covered the in-app Chromium browser; Safari/Firefox behavior has not been independently verified.
 
-The local Windows sandbox prevents Wrangler's internal directory scanning during dry-run; the compiled Worker validates locally. GitHub CI also runs the dry-run in its Linux runner, and its result must be checked rather than assumed.
-
-The full live replay and hosted-release gates are **not passed**. An independent security audit and a distributed traffic benchmark have not been performed. No claim of perfect behavior is made.
+The default deployment mode is now full. Receipt mode remains available as a fallback when archive/tracing access is unavailable.

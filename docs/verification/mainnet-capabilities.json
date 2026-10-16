@@ -1,0 +1,58 @@
+{
+  "checkedAt": "2026-10-16T14:20:29.870Z",
+  "ready": true,
+  "checks": [
+    {
+      "name": "Robinhood mainnet",
+      "passed": true,
+      "evidence": {
+        "chainId": 4663
+      }
+    },
+    {
+      "name": "Historical transaction and receipt",
+      "passed": true,
+      "evidence": {
+        "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+        "block": "0x55e93ba",
+        "from": "0x6976633c66f3992da0c020be1d9784e244ff4fcb",
+        "to": "0x261a32c33a372a65a780eba2756a1ac40122fbaa",
+        "status": "0x1",
+        "transferEvents": 2
+      }
+    },
+    {
+      "name": "Historical contract code",
+      "passed": true,
+      "evidence": {
+        "block": "0x55e93ba",
+        "bytes": 283
+      }
+    },
+    {
+      "name": "Historical contract storage",
+      "passed": true,
+      "evidence": {
+        "block": "0x55e93ba"
+      }
+    },
+    {
+      "name": "Historical eth_call",
+      "passed": true,
+      "evidence": {
+        "block": "0x55e93ba",
+        "decimals": 18
+      }
+    },
+    {
+      "name": "Historical callTracer replay",
+      "passed": true,
+      "evidence": {
+        "hash": "0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0",
+        "frames": 10,
+        "maxDepth": 4,
+        "method": "debug_traceTransaction"
+      }
+    }
+  ]
+}
