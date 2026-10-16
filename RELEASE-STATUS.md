@@ -12,6 +12,8 @@ Updated 16 October 2026.
 
 ## Required before production release
 
+The user has selected a public-RPC receipt-only release for now. A receipt-mode workflow is available and does not claim historical replay. Full-mode gates below remain required before enabling that feature.
+
 1. Add a Robinhood mainnet archive/tracing endpoint. None has been supplied. The public RPC rejected tracing and historical state during tests.
 2. Add real verification-case hashes and pass `npm run verify:provider` for success, revert, nested, proxy and token cases.
 3. Add Cloudflare deployment credentials and the endpoint as repository environment secrets.

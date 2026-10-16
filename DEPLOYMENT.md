@@ -10,6 +10,8 @@ Use Node 22 or later. Run `npm ci`, `npm test`, `npm run build`, `npm run valida
 
 ## Required account setup
 
+For the initial public-RPC release, choose **receipt** in the manual **Deploy Reversa** workflow. Only `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are required as GitHub `production` environment secrets. This mode verifies mainnet reads and disables internal call tracing. Current-state Contract Lab remains available. No private RPC secret or verification-case file is needed for receipt mode. Full mode still requires all steps below.
+
 1. Obtain a Robinhood Chain mainnet endpoint with chain ID 4663, historical code/storage/eth_call access, and either `debug_traceTransaction` with `callTracer` or `trace_transaction`. Confirm historical coverage, throughput and charges with the provider before subscribing. Official provider list: https://docs.robinhood.com/chain/connecting/.
 2. Put the endpoint in local `.env` as `ROBINHOOD_MAINNET_RPC`. Never commit `.env` or put the endpoint in browser fields.
 3. Copy `verification-cases.example.json` to `verification-cases.json`. Replace every placeholder with a real mainnet transaction matching its category. Hashes are public and may be committed. Categories may reuse a transaction only when it meets both tests.

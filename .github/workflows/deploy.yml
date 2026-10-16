@@ -1,6 +1,15 @@
 name: Deploy Reversa
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Deployment capability
+        type: choice
+        required: true
+        default: receipt
+        options:
+          - receipt
+          - full
 permissions:
   contents: read
 concurrency:
@@ -22,15 +31,29 @@ jobs:
       - run: npm run build
       - run: npm run validate
       - name: Verify live archive and trace coverage
+        if: inputs.mode == 'full'
         run: npm run verify:provider
         env:
           ROBINHOOD_MAINNET_RPC: ${{ secrets.ROBINHOOD_MAINNET_RPC }}
-      - name: Deploy Worker and runtime RPC secret
+      - name: Verify public mainnet reads
+        if: inputs.mode == 'receipt'
+        run: npm run verify:mainnet
+      - name: Deploy receipt-only Worker
+        if: inputs.mode == 'receipt'
         uses: cloudflare/wrangler-action@v3
         with:
           wranglerVersion: '4.151.1'
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --var DEPLOYMENT_MODE:receipt
+      - name: Deploy full Worker and runtime RPC secret
+        if: inputs.mode == 'full'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          wranglerVersion: '4.151.1'
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --var DEPLOYMENT_MODE:full
           secrets: |
             ROBINHOOD_MAINNET_RPC
         env:

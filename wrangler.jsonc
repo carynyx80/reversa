@@ -5,5 +5,6 @@
   "no_bundle": true,
   "compatibility_date": "2026-10-16",
   "workers_dev": true,
+  "vars": { "DEPLOYMENT_MODE": "receipt" },
   "observability": { "enabled": true }
 }

@@ -4,6 +4,8 @@ Read-only Robinhood Chain transaction and contract analysis, implemented as a Cl
 
 Repository: https://github.com/carynyx80/reversa. Read [deployment instructions](DEPLOYMENT.md) and [release status](RELEASE-STATUS.md) before publishing.
 
+The initial deployment defaults to **receipt-only mode** using the official public RPC. Select `receipt` in the manual deployment workflow and configure the two Cloudflare secrets. Internal replay is explicitly disabled until an archive/tracing provider is configured and full-mode checks pass.
+
 ## Run
 
 Install locked dependencies with `npm ci` (use a writable npm cache if required). `npm start` starts http://127.0.0.1:4173. `npm test` runs deterministic analysis, ABI, proxy and tracing tests. `npm run verify:mainnet` performs live mainnet verification and writes MAINNET-VERIFICATION.json. `npm run build` bundles the Worker; `npm run validate` validates the artifact. The build uses granular viem ESM modules and pins the package version.
