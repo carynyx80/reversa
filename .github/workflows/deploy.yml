@@ -35,9 +35,13 @@ jobs:
         run: npm run verify:provider
         env:
           ROBINHOOD_MAINNET_RPC: ${{ secrets.ROBINHOOD_MAINNET_RPC }}
-      - name: Verify public mainnet reads
+      - name: Verify dedicated mainnet reads
         if: inputs.mode == 'receipt'
         run: npm run verify:mainnet
+        env:
+          ROBINHOOD_MAINNET_RPC: ${{ secrets.ROBINHOOD_MAINNET_RPC }}
+          DEPLOYMENT_MODE: receipt
+          REQUIRE_DEDICATED_RPC: '1'
       - name: Deploy receipt-only Worker
         if: inputs.mode == 'receipt'
         uses: cloudflare/wrangler-action@v3
@@ -46,6 +50,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --var DEPLOYMENT_MODE:receipt
+          secrets: |
+            ROBINHOOD_MAINNET_RPC
+        env:
+          ROBINHOOD_MAINNET_RPC: ${{ secrets.ROBINHOOD_MAINNET_RPC }}
       - name: Deploy full Worker and runtime RPC secret
         if: inputs.mode == 'full'
         uses: cloudflare/wrangler-action@v3
