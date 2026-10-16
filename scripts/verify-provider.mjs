@@ -1,10 +1,12 @@
+import {createProviderRPC} from './provider-rpc.mjs';
 import {existsSync} from 'node:fs';
 import {readFile,writeFile} from 'node:fs/promises';
 import {fetchTrace} from '../worker/tracing.js';
 if(existsSync('.env')&&process.loadEnvFile)process.loadEnvFile('.env');
 const result={checkedAt:new Date().toISOString(),ready:false,checks:[],blockers:[]};
 const url=process.env.ROBINHOOD_MAINNET_RPC;
-async function rpc(method,params=[]){const response=await fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params}),signal:AbortSignal.timeout(20000)});if(!response.ok)throw Error('Provider HTTP '+response.status);const d=await response.json();if(d.error)throw Error('Provider rejected '+method+' (code '+d.error.code+')');return d.result;}
+const rpc=createProviderRPC(url);
+
 try{
 if(!url)throw Error('ROBINHOOD_MAINNET_RPC is missing. Configure an archive/tracing provider in .env or runtime secrets.');
 const chain=Number(BigInt(await rpc('eth_chainId')));if(chain!==4663)throw Error('Endpoint is not Robinhood mainnet (4663).');result.checks.push('Mainnet chain ID 4663');

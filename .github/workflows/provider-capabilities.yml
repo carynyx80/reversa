@@ -1,10 +1,5 @@
 name: Verify mainnet capabilities
 on:
-  push:
-    branches: [main]
-    paths:
-      - scripts/probe-capabilities.mjs
-      - .github/workflows/provider-capabilities.yml
   workflow_dispatch:
 permissions:
   contents: read

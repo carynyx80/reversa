@@ -1,9 +1,10 @@
+import {createProviderRPC} from './provider-rpc.mjs';
 import {writeFile,appendFile} from 'node:fs/promises';
 const endpoint=process.env.ROBINHOOD_MAINNET_RPC;
 const report={checkedAt:new Date().toISOString(),ready:false,checks:[]};
 const hash='0x2671d3f54c9bf09205e9e102bab3a5791d052c5bfc082e50621dad420f22f7b0';
 const token='0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec';
-async function rpc(method,params=[]){if(!endpoint)throw Error('RPC_SECRET_MISSING');let response;try{response=await fetch(endpoint,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params}),signal:AbortSignal.timeout(20000)});}catch{throw Error('RPC_CONNECTION_FAILED');}if(!response.ok)throw Error('RPC_HTTP_'+response.status);const d=await response.json();if(d.error){const msg=d.error.message||'';const category=/paid|premium|subscription|credits|balance|plan|fund/i.test(msg)?'PLAN_OR_CREDITS_REQUIRED':/not supported|not available|not exist|method not found/i.test(msg)?'METHOD_UNAVAILABLE':'PROVIDER_REJECTED';throw Error(category+' (RPC '+d.error.code+')');}return d.result;}
+const rpc=createProviderRPC(endpoint);
 async function check(name,fn){try{const evidence=await fn();report.checks.push({name,passed:true,evidence});return evidence;}catch(e){report.checks.push({name,passed:false,error:e.message});return null;}}
 await check('Robinhood mainnet',async()=>{const chain=Number(BigInt(await rpc('eth_chainId')));if(chain!==4663)throw Error('WRONG_CHAIN_'+chain);return {chainId:chain};});
 const transaction=await check('Historical transaction and receipt',async()=>{const [tx,receipt]=await Promise.all([rpc('eth_getTransactionByHash',[hash]),rpc('eth_getTransactionReceipt',[hash])]);if(!tx||!receipt)throw Error('TRANSACTION_NOT_FOUND');return {hash,block:receipt.blockNumber,from:tx.from,to:tx.to,status:receipt.status,transferEvents:receipt.logs.length};});
