@@ -12,3 +12,6 @@ PROVIDER-READINESS.json
 TEST-REPORT.json
 mainnet-example.json
 mainnet-probe.json
+
+.vercel/
+public/

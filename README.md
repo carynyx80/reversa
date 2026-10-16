@@ -33,3 +33,7 @@ On mainnet, the live token at `0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec` resol
 Historical mainnet replay and ABI resolution are now enabled through the dedicated provider and passed the live scenario gate. Version 0.4 adds request/response bounds, rate and concurrency limits, analysis caching/coalescing, optional shared KV/platform rate-limiter bindings, secret redaction, security headers, metrics protection and deterministic scenario/load tests. GitHub CI checks the build; manual deployment requires a passing live provider gate. Distributed production load tests, background jobs and saved sessions remain; hosted replay and browser controls were verified. AI, security auditing, decompilation and opcode execution snapshots are not implemented. No PostgreSQL or Redis service is provisioned. These are not represented as completed features.
 
 Tests use synthetic fixtures for reproducibility; they are never displayed as live data in the application. Calls are replayed in depth-first order, capped at 5,000, not opcode or event chronology. State differences are unavailable. This is an independent project, not an official Robinhood product.
+
+## Vercel hosting
+
+See [VERCEL.md](VERCEL.md) for importing this repository, adding the server-side RPC environment variable, and checking the deployed app.
